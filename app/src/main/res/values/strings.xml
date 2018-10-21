@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Yuru</string>
-
     <string name="version_code">0.0.1</string>
+
+    <!-- Errors -->
+    <string name="go_to_settings">Go To Settings</string>
+    <string name="error_no_connection_avaible">No connection available</string>
+    <string name="exit">Exit</string>
+
 </resources>
