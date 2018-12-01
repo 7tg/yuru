@@ -19,8 +19,6 @@ public class LogoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        //Hide actionbar
-        getSupportActionBar().hide();
 
         //Create svg logo
         FillableLoader fillableLoader = findViewById(R.id.fillableLoader);
