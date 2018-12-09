@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        key {
+            keyAlias 'tayyip'
+            keyPassword 'tayyip13'
+            storeFile file('C:/Users/Tayyip/Desktop/GIT Repositories/yuru/key.jks')
+            storePassword 'tayyip13'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.tayyipgoren.yuru"
@@ -14,12 +22,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.key
+        }
+        debug {
+            signingConfig signingConfigs.key
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
@@ -27,7 +39,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
     implementation 'devlight.io:navigationtabbar:1.2.5'
+    implementation 'com.google.android.gms:play-services-fitness:8.4.0'
 }
