@@ -7,10 +7,11 @@ import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
+
 import com.tayyipgoren.yuru.marvellous.Helpers;
 
 import com.github.jorgecastillo.FillableLoader;
+import com.tayyipgoren.yuru.yuru.SVG;
 
 public class LogoActivity extends AppCompatActivity{
 

@@ -43,11 +43,17 @@ import com.google.android.gms.fitness.request.OnDataPointListener;
 import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.android.gms.fitness.result.DataSourcesResult;
+import com.tayyipgoren.yuru.yuru.ClassStorageHandler;
+import com.tayyipgoren.yuru.yuru.User;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import devlight.io.library.ntb.NavigationTabBar;
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener
 {
-
+    public static String LOG_TAG = "MAIN_ACTIVITY";
     public static TextView textView;
 
     //Google Fit API
@@ -65,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements
     private static final String AUTH_PENDING = "auth_state_pending";
     private boolean authInProgress = false;
     private GoogleApiClient mApiClient;
+
+    //User
+    public static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +94,41 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnConnectionFailedListener(this)
                 .build();
         mApiClient.connect();
+
+        //Try User
+        this.user = User.getFakeUser();
+
+        ClassStorageHandler.saveObject(this, this.user);
+
+
+        FileInputStream file_input;
+        try {
+            file_input = openFileInput(ClassStorageHandler.getClassFileName(User.class.getName()));
+            User readed_user = (User) ClassStorageHandler.loadSerializedObject(file_input);
+        }catch (FileNotFoundException err)
+        {
+            Log.e(LOG_TAG, err.getMessage());
+        }
+
+
+
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateStepTextView();
+            }
+        }, 0, 1000);
+
+
     }
+
+    private void updateStepTextView()
+    {
+        // this.textView.setText(Float.toString(this.user.getSteps()));
+    }
+
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -136,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(), "Field: " + field.getName() + " Value: " + value, Toast.LENGTH_SHORT).show();
-                    MainActivity.textView.setText(value.toString());
+                    MainActivity.user.setSteps(value.asInt());
                 }
             });
         }

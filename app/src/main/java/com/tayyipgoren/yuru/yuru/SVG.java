@@ -1,6 +1,6 @@
-package com.tayyipgoren.yuru;
+package com.tayyipgoren.yuru.yuru;
 
-public interface SVG {
+public interface  SVG {
     String GITHUB = "M 112.33,232.00\n" + "           C 109.27,216.19 108.87,196.79 112.33,181.00\n"
             + "             114.49,170.23 117.46,161.47 123.20,152.00\n"
             + "             123.20,152.00 133.52,137.00 133.52,137.00\n"
