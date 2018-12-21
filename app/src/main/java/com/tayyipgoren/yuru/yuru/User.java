@@ -17,10 +17,12 @@ public class User implements Serializable
     private ArrayList<Coupon> coupons;
     private ArrayList<Achivement> achivements;
 
-    public User() {
+    public User()
+    {
     }
 
-    public User(Date birth_date, String first_name, String last_name, String mail, String passwd, String sex, long steps) {
+    public User(Date birth_date, String first_name, String last_name, String mail, String passwd, String sex, long steps)
+    {
         this.birth_date = birth_date;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -28,6 +30,9 @@ public class User implements Serializable
         this.passwd = passwd;
         this.sex = sex;
         this.steps = steps;
+
+        this.coupons = new ArrayList<Coupon>();
+        this.achivements = new ArrayList<Achivement>();
     }
 
     @Override
@@ -98,6 +103,7 @@ public class User implements Serializable
 
         return true;
     }
+
 
     public static User getFakeUser()
     {

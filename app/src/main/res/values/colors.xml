@@ -10,4 +10,9 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorBackground">#333333</color>
 
+    <color name="gaugePointEndColor">#0066cc</color>
+    <color name="gaugePointStartColor">#00ffff</color>
+    <color name="gaugeStrokeColor">#cccccc</color>
+
+
 </resources>

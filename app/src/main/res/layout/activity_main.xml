@@ -32,30 +32,42 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/gaugeTextView"
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="DENEME"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="deneme"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="60dp" />
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:typeface="normal" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="60dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="left|center_vertical|center"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_walk" />
-                </LinearLayout>
+                    <pl.pawelkleczkowski.customgauge.CustomGauge
+                        android:id="@+id/gauge2"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_below="@+id/gauge1"
+                        android:layout_centerHorizontal="true"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        app:gaugeEndValue="1000"
+                        app:gaugePointEndColor="@color/gaugePointEndColor"
+                        app:gaugePointStartColor="@color/gaugePointStartColor"
+                        app:gaugeStartAngle="135"
+                        app:gaugeStartValue="0"
+                        app:gaugeStrokeCap="ROUND"
+                        app:gaugeStrokeColor="@color/gaugeStrokeColor"
+                        app:gaugeStrokeWidth="10dp"
+                        app:gaugeSweepAngle="270" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

@@ -41,5 +41,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
     implementation 'devlight.io:navigationtabbar:1.2.5'
+    implementation 'pl.pawelkleczkowski.customgauge:CustomGauge:1.0.3'
     implementation 'com.google.android.gms:play-services-fitness:8.4.0'
 }
