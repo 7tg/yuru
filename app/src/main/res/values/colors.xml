@@ -2,14 +2,15 @@
 <resources>
     <color name="colorPrimary">#00ff99</color>
     <color name="colorPrimaryDark">#00cc7a</color>
-    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorPrimaryLight">#c8e6c9</color>
     <color name="colorAccent">#8bc34a</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="colorIcons">#FFFFFF</color>
-    <color name="colorDivider">#BDBDBD</color>
-    <color name="colorBackground">#333333</color>
+    <color name="colorIcons">#ffffff</color>
+    <color name="colorDivider">#bdbdbd</color>
+    <color name="colorBackground">#e6e7e9</color>
 
+    <color name="ntb_background">#006d41</color>
     <color name="gaugePointEndColor">#0066cc</color>
     <color name="gaugePointStartColor">#00ffff</color>
     <color name="gaugeStrokeColor">#cccccc</color>

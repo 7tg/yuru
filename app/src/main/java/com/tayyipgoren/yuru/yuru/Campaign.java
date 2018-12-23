@@ -1,7 +1,12 @@
 package com.tayyipgoren.yuru.yuru;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
+import com.tayyipgoren.yuru.R;
 
 public class Campaign implements Serializable
 {
@@ -11,6 +16,9 @@ public class Campaign implements Serializable
     private String desc;
     private boolean is_closed;
     private String name;
+    private Drawable image;
+
+
 
     public Campaign(Company company, int capacity, int capacity_taken, String desc, boolean is_closed, String name) {
         this.company = company;
@@ -19,6 +27,9 @@ public class Campaign implements Serializable
         this.desc = desc;
         this.is_closed = is_closed;
         this.name = name;
+    }
+    public Drawable getImage() {
+        return image;
     }
 
     public Company getCompany() {
@@ -82,6 +93,45 @@ public class Campaign implements Serializable
                 ", is_closed=" + is_closed +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public static ArrayList<Campaign> getFakeCampaigns()
+    {
+        Random rn = new Random();
+
+        Company[] companies = {
+            new Company("Addax","Addax", R.drawable.marka_addax),
+            new Company("Alixpress","Alixpress", R.drawable.marka_aliexpress),
+            new Company("Boyner","Boyner", R.drawable.marka_boyner),
+            new Company("D&R","D&R", R.drawable.marka_dand),
+            new Company("DeFacto","DeFacto", R.drawable.marka_defacto),
+            new Company("Deichman","Deichman", R.drawable.marka_deichmann),
+            new Company("Forever","Forever", R.drawable.marka_forever),
+            new Company("GittiGidiyor.com","GittiGidiyor.com", R.drawable.marka_gittigidiyor),
+            new Company("Kaspersky","Kaspersky", R.drawable.marka_kaspersky),
+            new Company("markapark","markapark", R.drawable.marka_markapark),
+            new Company("Mavi","Mavi", R.drawable.marka_mavi),
+            new Company("n11","n11", R.drawable.marka_n11),
+            new Company("Penti","Penti", R.drawable.marka_penti),
+            new Company("ToyzShop","ToyzShop", R.drawable.marka_toyzz_shop),
+            new Company("Udemy","Udemy", R.drawable.marka_udemy),
+        };
+
+        ArrayList<Campaign> campaigns = new ArrayList<Campaign>();
+        for (Company company:
+             companies)
+        {
+            campaigns.add(new Campaign(
+                    company,
+                    2000 + rn.nextInt(1000),
+                    rn.nextInt(2000),
+                    company.getName() + " Kampanyası",
+                    false,
+                    company.getName() + " İndirim Kampanyası"
+            ));
+        }
+
+        return campaigns;
     }
 
 

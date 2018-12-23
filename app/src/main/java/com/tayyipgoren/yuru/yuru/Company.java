@@ -1,5 +1,7 @@
 package com.tayyipgoren.yuru.yuru;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,10 +9,21 @@ public class Company implements Serializable
 {
     private String desc;
     private String name;
+    private int image;
 
     public Company(String desc, String name) {
         this.desc = desc;
         this.name = name;
+    }
+
+    public Company(String desc, String name, int image) {
+        this.desc = desc;
+        this.name = name;
+        this.image = image;
+    }
+
+    public int getImage() {
+        return image;
     }
 
     public String getDesc() {

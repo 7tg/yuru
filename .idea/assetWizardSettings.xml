@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -28,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_refresh" />
-                            <entry key="sourceFile" value="C:\Users\Tayyip" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="half_triangle" />
+                            <entry key="sourceFile" value="C:\Users\Tayyip\Desktop\user.svg" />
                           </map>
                         </option>
                       </PersistentState>

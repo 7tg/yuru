@@ -36,16 +36,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/gaugeTextView"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="deneme"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        android:typeface="normal" />
+                        android:gravity="center_vertical|center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/footsteps" />
+
+                        <TextView
+                            android:id="@+id/gaugeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_weight="1"
+                            android:text="deneme"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            android:typeface="normal" />
+
+                    </LinearLayout>
 
                     <pl.pawelkleczkowski.customgauge.CustomGauge
                         android:id="@+id/gauge2"
@@ -57,13 +74,13 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="10dp"
-                        app:gaugeEndValue="1000"
+                        app:gaugeEndValue="10000"
                         app:gaugePointEndColor="@color/gaugePointEndColor"
                         app:gaugePointStartColor="@color/gaugePointStartColor"
                         app:gaugeStartAngle="135"
                         app:gaugeStartValue="0"
                         app:gaugeStrokeCap="ROUND"
-                        app:gaugeStrokeColor="@color/gaugeStrokeColor"
+                        app:gaugeStrokeColor="@color/colorBackground"
                         app:gaugeStrokeWidth="10dp"
                         app:gaugeSweepAngle="270" />
                 </RelativeLayout>
@@ -92,6 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
+        app:ntb_active_color="@color/common_google_signin_btn_text_dark_focused"
         app:ntb_badge_bg_color="#ffff0000"
         app:ntb_badge_gravity="top"
         app:ntb_badge_position="right"
@@ -99,18 +117,8 @@
         app:ntb_badge_title_color="#ffffffff"
         app:ntb_badge_use_typeface="true"
         app:ntb_badged="true"
+        app:ntb_bg_color="@color/colorPrimaryDark"
+        app:ntb_inactive_color="@color/colorPrimaryText"
         app:ntb_typeface="fonts/agency.ttf" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="76dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_refresh"
-        android:tint="@color/colorPrimaryText"
-        app:backgroundTint="@color/colorAccent" />
 
 </android.support.design.widget.CoordinatorLayout>

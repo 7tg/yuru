@@ -1,9 +1,12 @@
 package com.tayyipgoren.yuru;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -42,6 +45,7 @@ import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DataSourcesResult;
 import com.tayyipgoren.yuru.yuru.Achivement;
 import com.tayyipgoren.yuru.yuru.ClassStorageHandler;
+import com.tayyipgoren.yuru.yuru.CustomPagerAdapter;
 import com.tayyipgoren.yuru.yuru.User;
 
 import java.io.FileInputStream;
@@ -75,12 +79,26 @@ public class MainActivity extends AppCompatActivity implements
     public CustomGauge gauge;
     public TextView gaugeTextView;
 
+    public static Handler mHandler;
+
+    public static Boolean isTimerRunning = false;
+
+    private static Timer timer;
+
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.initUI();
+
+        timer = new Timer();
+        mHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                updateStepTextView(MainActivity.this);
+            }
+        };
 
         if (savedInstanceState != null) {
             authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
@@ -104,28 +122,7 @@ public class MainActivity extends AppCompatActivity implements
         this.user.addAchivement(new Achivement("Deneme 5 achivement"));
         this.user.addAchivement(new Achivement("Deneme 6 achivement"));
 
-
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-
-//                Timer timer = new Timer();
-//                timer.scheduleAtFixedRate(new TimerTask() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                }, 0, 1000);
-
-                updateStepTextView(MainActivity.this);
-            }
-
-        });
-
-
-
-
+        startTimer();
     }
 
     private void updateStepTextView(MainActivity activity)
@@ -134,6 +131,15 @@ public class MainActivity extends AppCompatActivity implements
         activity.gauge.setValue(steps.intValue());
         activity.gaugeTextView.setText(steps.toString());
         // this.textView.setText(Float.toString(this.user.getSteps()));
+    }
+
+    protected static void startTimer() {
+        isTimerRunning = true;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                mHandler.obtainMessage(1).sendToTarget();
+            }
+        }, 0, 1000);
     }
 
 
@@ -228,101 +234,55 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    @SuppressLint("ResourceType")
     private boolean initUI()
     {
         gauge = findViewById(R.id.gauge2);
         gaugeTextView = findViewById(R.id.gaugeTextView);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
-        viewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 5;
-            }
-
-            @Override
-            public boolean isViewFromObject(final View view, final Object object) {
-                return view.equals(object);
-            }
-
-            @Override
-            public void destroyItem(final View container, final int position, final Object object) {
-                ((ViewPager) container).removeView((View) object);
-            }
-
-            @Override
-            public Object instantiateItem(final ViewGroup container, final int position) {
-                final View view = LayoutInflater.from(
-                        getBaseContext()).inflate(R.layout.item_vp_list, null, false);
-
-                final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(
-                                getBaseContext(), LinearLayoutManager.VERTICAL, false
-                        )
-                );
-                recyclerView.setAdapter(new RecyclerView.Adapter() {
-                    @Override
-                    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                        return null;
-                    }
-
-                    @Override
-                    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-                    }
-
-                    @Override
-                    public int getItemCount() {
-                        return 0;
-                    }
-                });
-
-                container.addView(view);
-                return view;
-            }
-        });
+        viewPager.setAdapter(new CustomPagerAdapter(this));
 
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal);
-        String[] colors = getResources().getStringArray(R.array.colors);
+        String[] colors = getResources().getStringArray(R.array.polluted_waves);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_first),
+                        getResources().getDrawable(R.drawable.qr_code),
                         Color.parseColor(colors[0])
-                ).title("Heart")
+                ).title(getString(R.string.QR))
                         .badgeTitle("NTB")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_second),
+                        getResources().getDrawable(R.drawable.cup),
                         Color.parseColor(colors[1])
-                ).title("Cup")
+                ).title(getString(R.string.TOP_LIST))
                         .badgeTitle("with")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_third),
+                        getResources().getDrawable(R.drawable.home),
                         Color.parseColor(colors[2])
-                ).title("Diploma")
+                ).title(getString(R.string.HOME))
                         .badgeTitle("state")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_fourth),
+                        getResources().getDrawable(R.drawable.coupon),
                         Color.parseColor(colors[3])
-                ).title("Flag")
-                        .badgeTitle("icon")
+                ).title(getString(R.string.COUPONS))
+                        .badgeTitle("Coupon")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_fifth),
+                        getResources().getDrawable(R.drawable.user),
                         Color.parseColor(colors[4])
-                ).title("Medal")
+                ).title(getString(R.string.PROFILE))
                         .badgeTitle("777")
                         .build()
         );
@@ -358,53 +318,52 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.parent);
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                for (int i = 0; i < navigationTabBar.getModels().size(); i++) {
-                    final NavigationTabBar.Model model = navigationTabBar.getModels().get(i);
-                    navigationTabBar.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            final String title = String.valueOf(new Random().nextInt(15));
-                            if (!model.isBadgeShowed()) {
-                                model.setBadgeTitle(title);
-                                model.showBadge();
-                            } else model.updateBadgeTitle(title);
-                        }
-                    }, i * 100);
-                }
-
-                coordinatorLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Snackbar snackbar = Snackbar.make(navigationTabBar, "Coordinator NTB", Snackbar.LENGTH_SHORT);
-                        snackbar.getView().setBackgroundColor(Color.parseColor("#9b92b3"));
-                        ((TextView) snackbar.getView().findViewById(R.id.snackbar_text))
-                                .setTextColor(Color.parseColor("#423752"));
-                        snackbar.show();
-                    }
-                }, 1000);
-            }
-        });
+//        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                for (int i = 0; i < navigationTabBar.getModels().size(); i++) {
+//                    final NavigationTabBar.Model model = navigationTabBar.getModels().get(i);
+//                    navigationTabBar.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            final String title = String.valueOf(new Random().nextInt(15));
+//                            if (!model.isBadgeShowed()) {
+//                                model.setBadgeTitle(title);
+//                                model.showBadge();
+//                            } else model.updateBadgeTitle(title);
+//                        }
+//                    }, i * 100);
+//                }
+//
+//                coordinatorLayout.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final Snackbar snackbar = Snackbar.make(navigationTabBar, "Coordinator NTB", Snackbar.LENGTH_SHORT);
+//                        snackbar.getView().setBackgroundColor(Color.parseColor("#9b92b3"));
+//                        ((TextView) snackbar.getView().findViewById(R.id.snackbar_text))
+//                                .setTextColor(Color.parseColor("#423752"));
+//                        snackbar.show();
+//                    }
+//                }, 1000);
+//            }
+//        });
 
         final CollapsingToolbarLayout collapsingToolbarLayout =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#009F90AF"));
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#9f90af"));
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor(getString(R.color.colorPrimaryText)));
 
 //        navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
 //        navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.BOTTOM);
 //        navigationTabBar.setBadgePosition(NavigationTabBar.BadgePosition.CENTER);
         navigationTabBar.setTypeface("fonts/custom_font.ttf");
         navigationTabBar.setIsBadged(true);
-//        navigationTabBar.setIsTitled(true);
+        navigationTabBar.setIsTitled(true);
 //        navigationTabBar.setIsTinted(true);
 //        navigationTabBar.setIsBadgeUseTypeface(true);
 //        navigationTabBar.setBadgeBgColor(Color.RED);
 //        navigationTabBar.setBadgeTitleColor(Color.BLUE);
-//        navigationTabBar.setIsSwiped(true);
-//        navigationTabBar.setBgColor(Color.BLACK);
+        navigationTabBar.setIsSwiped(true);
 //        navigationTabBar.setBadgeSize(10);
 //        navigationTabBar.setTitleSize(10);
           navigationTabBar.setIsTinted(true);
