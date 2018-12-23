@@ -34,8 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="half_triangle" />
-                            <entry key="sourceFile" value="C:\Users\Tayyip\Desktop\user.svg" />
+                            <entry key="outputName" value="coin" />
+                            <entry key="sourceFile" value="C:\Users\Tayyip\Desktop\coin.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -1,6 +1,7 @@
 package com.tayyipgoren.yuru;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements
 
     public CustomGauge gauge;
     public TextView gaugeTextView;
+    public TextView cointTextView;
 
     public static Handler mHandler;
 
@@ -128,8 +131,10 @@ public class MainActivity extends AppCompatActivity implements
     private void updateStepTextView(MainActivity activity)
     {
         Long steps = MainActivity.user.getSteps();
+        Long points = MainActivity.user.getPoints();
         activity.gauge.setValue(steps.intValue());
         activity.gaugeTextView.setText(steps.toString());
+        activity.cointTextView.setText(points.toString());
         // this.textView.setText(Float.toString(this.user.getSteps()));
     }
 
@@ -234,11 +239,12 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @SuppressLint("ResourceType")
+
     private boolean initUI()
     {
         gauge = findViewById(R.id.gauge2);
         gaugeTextView = findViewById(R.id.gaugeTextView);
+        cointTextView = findViewById(R.id.main_point_text_view);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         viewPager.setAdapter(new CustomPagerAdapter(this));
@@ -351,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements
         final CollapsingToolbarLayout collapsingToolbarLayout =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#009F90AF"));
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor(getString(R.color.colorPrimaryText)));
+
 
 //        navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
 //        navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.BOTTOM);
@@ -372,6 +378,17 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.exit)
+                .setMessage(R.string.exit_confirm)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setNegativeButton(R.string.no, null).show();
+    }
 
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 

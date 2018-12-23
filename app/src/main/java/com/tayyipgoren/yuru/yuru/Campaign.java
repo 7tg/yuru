@@ -16,18 +16,25 @@ public class Campaign implements Serializable
     private String desc;
     private boolean is_closed;
     private String name;
+    private int point;
     private Drawable image;
 
 
 
-    public Campaign(Company company, int capacity, int capacity_taken, String desc, boolean is_closed, String name) {
+    public Campaign(Company company, int capacity, int capacity_taken, String desc, int point , boolean is_closed, String name) {
         this.company = company;
         this.capacity = capacity;
         this.capacity_taken = capacity_taken;
+        this.point = point;
         this.desc = desc;
         this.is_closed = is_closed;
         this.name = name;
     }
+
+    public int getPoint() {
+        return point;
+    }
+
     public Drawable getImage() {
         return image;
     }
@@ -117,6 +124,8 @@ public class Campaign implements Serializable
             new Company("Udemy","Udemy", R.drawable.marka_udemy),
         };
 
+        Integer[] discounts = {10,20,30,40,50,60,70,80,90};
+
         ArrayList<Campaign> campaigns = new ArrayList<Campaign>();
         for (Company company:
              companies)
@@ -126,8 +135,9 @@ public class Campaign implements Serializable
                     2000 + rn.nextInt(1000),
                     rn.nextInt(2000),
                     company.getName() + " Kampanyası",
+                    1000 + rn.nextInt(500),
                     false,
-                    company.getName() + " İndirim Kampanyası"
+                    company.getName() + " " + discounts[rn.nextInt(9)].toString() + "% İndirim Kampanyası"
             ));
         }
 

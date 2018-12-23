@@ -1,20 +1,26 @@
 <resources>
-    <string name="app_name">Yuru</string>
+    <string name="app_name">Yürü</string>
     <string name="version_code">0.0.2</string>
 
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+
     <!-- Errors -->
-    <string name="go_to_settings">Go To Settings</string>
-    <string name="error_no_connection_avaible">No connection available</string>
-    <string name="exit">Exit</string>
-    <string name="red">RED</string>
-    <string name="blue">BLUE</string>
-    <string name="green">GREEN</string>
-    <string name="QR">QR</string>
-    <string name="TOP_LIST">Top List</string>
-    <string name="HOME">Home</string>
-    <string name="COUPONS">My Coupons</string>
-    <string name="PROFILE">Profile</string>
+    <string name="go_to_settings">Ayarlara git</string>
+    <string name="error_no_connection_avaible">İnternet bağlantısı yok.</string>
+    <string name="exit">Çıkış</string>
+    <string name="exit_confirm">Çıkmak istediğinize emin misiniz?</string>
+
+
+    <string name="QR">Kare Kod</string>
+    <string name="TOP_LIST">İlk 10</string>
+    <string name="HOME">Giriş</string>
+    <string name="COUPONS">Kuponlarım</string>
+    <string name="PROFILE">Profilim</string>
 
     <string name="left_amount">Kalan</string>
-
+    <string name="point">Puan</string>
+    <string name="coupon_confirm">Kuponu almak istediğinize emin misiniz?</string>
+    <string name="coupon_dialog_ok">Kupon başarıyla alındı.</string>
+    <string name="coupon_dialog_not_enough">Yeterli puanınız olmadığı için kuponu alamazsınız.</string>
 </resources>

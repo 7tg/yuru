@@ -13,15 +13,18 @@ public class User implements Serializable
     private String passwd;
     private String sex;
     private long steps;
+    private long points;
 
     private ArrayList<Coupon> coupons;
     private ArrayList<Achivement> achivements;
 
+
+    private static User user;
     public User()
     {
     }
 
-    public User(Date birth_date, String first_name, String last_name, String mail, String passwd, String sex, long steps)
+    public User(Date birth_date, String first_name, String last_name, String mail, String passwd, String sex, long steps, long points)
     {
         this.birth_date = birth_date;
         this.first_name = first_name;
@@ -30,7 +33,7 @@ public class User implements Serializable
         this.passwd = passwd;
         this.sex = sex;
         this.steps = steps;
-
+        this.points = points;
         this.coupons = new ArrayList<Coupon>();
         this.achivements = new ArrayList<Achivement>();
     }
@@ -42,6 +45,7 @@ public class User implements Serializable
                 ", last_name='" + last_name + '\'' +
                 '}';
     }
+
 
     public long getSteps() {
         return steps;
@@ -93,8 +97,7 @@ public class User implements Serializable
 
     public long getPoints()
     {
-        // TODO : Add getPoints function
-        return 0;
+        return this.points;
     }
 
     public boolean saveUser()
@@ -104,10 +107,25 @@ public class User implements Serializable
         return true;
     }
 
+    public boolean joinCampaign(Campaign campaign)
+    {
+        if (this.points < campaign.getPoint()) { return false; }
+
+        this.points -= campaign.getPoint();
+        this.coupons.add(new Coupon(campaign.getName(), "XXXXXXXXXXXXXX", false, campaign));
+
+        return true;
+    }
+
 
     public static User getFakeUser()
     {
-        return new User(new Date(Date.UTC(1999,1,13,0,0,0)), "Tayyip", "Gören", "tayyipgoren@gmail.com",
-                "tayyi13", "M", 1000);
+        if (user == null)
+        {
+            user = new User(new Date(Date.UTC(1999,1,13,0,0,0)), "Tayyip", "Gören", "tayyipgoren@gmail.com",
+                    "tayyi13", "M", 1000, 10000);
+            return user;
+        }
+        else return user;
     }
 }
